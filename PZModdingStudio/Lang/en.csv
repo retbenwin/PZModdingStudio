@@ -1,0 +1,11 @@
+﻿key,value
+FrmMainMenu.fileToolStripMenuItem.Text,File
+FrmMainMenu.settingsToolStripMenuItem.Text,Settings
+FrmMainMenu.btnSettings.Text,Settings
+FrmSettings.$this.Text,Settings
+FrmSettings.lblLanguage.Text,Select Language:
+FrmSettings.btnApply.Text,Apply
+FrmSettings.btnOk.Text,Ok
+FrmSettings.btnBack.Text,Back
+
+
