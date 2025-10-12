@@ -2,10 +2,17 @@
 FrmMainMenu.fileToolStripMenuItem.Text,File
 FrmMainMenu.settingsToolStripMenuItem.Text,Settings
 FrmMainMenu.btnSettings.Text,Settings
+FrmMainMenu.loadToolStripMenuItem.Text,Load Mod
 FrmSettings.$this.Text,Settings
 FrmSettings.lblLanguage.Text,Select Language:
 FrmSettings.btnApply.Text,Apply
 FrmSettings.btnOk.Text,Ok
 FrmSettings.btnBack.Text,Back
+LoadModDialog,Load Mod
+LoadModDialogFilter,Mod info files
+LoadModDialogFilterAllFIles,All files
+Error,Error
+Info,Info
+LoadModInvalidModFile,Invalid mod info file, please check the structure.
 
 

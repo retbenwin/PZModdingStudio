@@ -104,6 +104,12 @@ namespace PZModdingStudio
                 fb.TryGetValue(key, out var v2) && !string.IsNullOrEmpty(v2))
                 return v2;
 
+            // no encontrado: devuelve en inglés si es posible
+            if (!string.Equals(CurrentLanguage, "en", StringComparison.OrdinalIgnoreCase) &&
+                languagesStore.TryGetValue("en", out var en) &&
+                en.TryGetValue(key, out var v3) && !string.IsNullOrEmpty(v3))
+                return v3;
+
             // último recurso: devolver la key (o string.Empty si prefieres)
             return key;
         }

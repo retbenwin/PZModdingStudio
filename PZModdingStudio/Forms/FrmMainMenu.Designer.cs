@@ -30,7 +30,9 @@
         {
             this.msMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cboModList = new System.Windows.Forms.ComboBox();
             this.msMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,31 +42,49 @@
             this.fileToolStripMenuItem});
             this.msMain.Location = new System.Drawing.Point(0, 0);
             this.msMain.Name = "msMain";
-            this.msMain.Size = new System.Drawing.Size(564, 24);
+            this.msMain.Size = new System.Drawing.Size(790, 24);
             this.msMain.TabIndex = 2;
             this.msMain.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadToolStripMenuItem,
             this.settingsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // loadToolStripMenuItem
+            // 
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Text = "Load Mod";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // cboModList
+            // 
+            this.cboModList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboModList.FormattingEnabled = true;
+            this.cboModList.Location = new System.Drawing.Point(2, 27);
+            this.cboModList.Name = "cboModList";
+            this.cboModList.Size = new System.Drawing.Size(249, 28);
+            this.cboModList.TabIndex = 3;
             // 
             // FrmMainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.ClientSize = new System.Drawing.Size(564, 392);
+            this.ClientSize = new System.Drawing.Size(790, 557);
+            this.Controls.Add(this.cboModList);
             this.Controls.Add(this.msMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.MainMenuStrip = this.msMain;
@@ -85,6 +105,8 @@
         private System.Windows.Forms.MenuStrip msMain;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private System.Windows.Forms.ComboBox cboModList;
     }
 }
 

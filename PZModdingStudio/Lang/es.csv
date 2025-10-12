@@ -2,8 +2,14 @@
 FrmMainMenu.fileToolStripMenuItem.Text,Archivo
 FrmMainMenu.settingsToolStripMenuItem.Text,Configuración
 FrmMainMenu.btnSettings.Text,Configuración
+FrmMainMenu.loadToolStripMenuItem.Text,Cargar Mod
 FrmSettings.$this.Text,Configuración
 FrmSettings.lblLanguage.Text,Seleccionar idioma:
 FrmSettings.btnApply.Text,Aplicar
 FrmSettings.btnOk.Text,Aceptar
 FrmSettings.btnBack.Text,Volver
+LoadModDialogFilter,Mod info Archivos
+LoadModDialogFilterAllFIles,Todos los archivos
+Error,Error
+Info,Info
+LoadModInvalidModFile,Archivo mod info inválido, por favor comprueba su estrcutura.

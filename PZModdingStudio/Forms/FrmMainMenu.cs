@@ -16,18 +16,37 @@ namespace PZModdingStudio.Forms
 
         private bool isInitializing = true;
 
+        private ModsManager modsManager;
+
         public FrmMainMenu()
         {
             isInitializing = true;
             InitializeComponent();
+            modsManager = ModsManager.GetInstance();
+            PopulateComboMods();
             isInitializing = false;
 
+        }
+
+        private void PopulateComboMods()
+        {
+            cboModList.DataSource = modsManager.Mods;
+            if (cboModList.Items.Count > 0)
+            {
+                cboModList.SelectedIndex = 0;
+            }
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmSettings frm = new FrmSettings();
             frm.ShowDialog(this);
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (isInitializing) return;
+            modsManager.LoadMod();
         }
     }
 }
