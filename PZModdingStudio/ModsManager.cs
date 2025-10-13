@@ -10,12 +10,13 @@ using System.Windows.Forms;
 
 namespace PZModdingStudio
 {
-    internal class ModsManager
+    public class ModsManager
     {
 
         private static ModsManager instance = null;
         private TranslationProvider translator;
         public BindingList<Mod> Mods { get; set; } = null;
+        public Mod SelectedMod { get; set; } = null;
 
         private ModsManager() {
             Mods = new BindingList<Mod>();
@@ -71,6 +72,26 @@ namespace PZModdingStudio
             {
                 MessageBox.Show(translator.Get("LoadModInvalidModFile"), translator.Get("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
+            }
+
+            //Comprobar que no esté ya cargado
+            int repeatedNumber = 0;
+            foreach (Mod m in Mods)
+            {
+                if (m.ModInfo.id == mod.ModInfo.id)
+                {
+                    repeatedNumber = m.GetRepeatedId() + 1;
+                    if (m.ModInfo.GetFilePath() == mod.ModInfo.GetFilePath())
+                    {
+                        MessageBox.Show(string.Format(translator.Get("LoadModAlreadyLoaded"), mod.ModInfo.id), translator.Get("Warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                }
+            }
+
+            if (repeatedNumber > 0)
+            {
+                mod.SetRepeatedNumber(repeatedNumber);
             }
 
             Mods.Add(mod);

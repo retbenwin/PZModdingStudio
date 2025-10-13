@@ -3,6 +3,7 @@ FrmMainMenu.fileToolStripMenuItem.Text,File
 FrmMainMenu.settingsToolStripMenuItem.Text,Settings
 FrmMainMenu.btnSettings.Text,Settings
 FrmMainMenu.loadToolStripMenuItem.Text,Load Mod
+FrmMainMenu.unloadModToolStripMenuItem.Text,Unload Mod
 FrmSettings.$this.Text,Settings
 FrmSettings.lblLanguage.Text,Select Language:
 FrmSettings.btnApply.Text,Apply
@@ -14,5 +15,25 @@ LoadModDialogFilterAllFIles,All files
 Error,Error
 Info,Info
 LoadModInvalidModFile,Invalid mod info file, please check the structure.
+Warning,Warning
+LoadModAlreadyLoaded, This mod is already loaded, it cannot be loaded again.
+FrmMenuMod.btnItems.Text,Items
+FrmMenuMod.btnTextures.Text,Textures
+FrmMenuMod.btn3DModels.Text,3D Models
+FrmMenuMod.btnClothing.Text,Clothing
+FrmMenuMod.btnAnimSets.Text,AnimSets
+FrmMenuMod.btnUI.Text,UI
+FrmMenuMod.btnSounds.Text,Sounds
+FrmMenuMod.btnLUA.Text,LUA
+FrmMenuMod.btn3DVisor.Text,3D Viewer
+lblLoading.Text,Loading
+MsgSelectModFirstTitle,Select a Mod.
+MsgSelectModFirst,You must load a mod to be able to do that.
+FrmMenuMod.$this.Text,Navigation
+SureRemoveModTitle,Are you sure you want to unload this mod?
+SureRemoveMod,"If you unload this mod, all open windows related to it will be closed and you will lose any unsaved changes. Are you sure you want to continue?"
+FrmMainMenu.viewToolStripMenuItem.Text,View
+FrmMainMenu.navigationToolStripMenuItem.Text,Navigation
+
 
 

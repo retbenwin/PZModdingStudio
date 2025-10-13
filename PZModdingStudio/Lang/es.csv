@@ -3,6 +3,7 @@ FrmMainMenu.fileToolStripMenuItem.Text,Archivo
 FrmMainMenu.settingsToolStripMenuItem.Text,Configuración
 FrmMainMenu.btnSettings.Text,Configuración
 FrmMainMenu.loadToolStripMenuItem.Text,Cargar Mod
+FrmMainMenu.unloadModToolStripMenuItem.Text,Quitar Mod
 FrmSettings.$this.Text,Configuración
 FrmSettings.lblLanguage.Text,Seleccionar idioma:
 FrmSettings.btnApply.Text,Aplicar
@@ -13,3 +14,22 @@ LoadModDialogFilterAllFIles,Todos los archivos
 Error,Error
 Info,Info
 LoadModInvalidModFile,Archivo mod info inválido, por favor comprueba su estrcutura.
+Warning,Advertencia
+LoadModAlreadyLoaded, Este mod ya se encuentra cargado, no se puede volver a cargar.
+FrmMenuMod.btnItems.Text,Items
+FrmMenuMod.btnTextures.Text,Texturas
+FrmMenuMod.btn3DModels.Text,Modelos 3D
+FrmMenuMod.btnClothing.Text,Ropa
+FrmMenuMod.btnAnimSets.Text,AnimSets
+FrmMenuMod.btnUI.Text,IU
+FrmMenuMod.btnSounds.Text,Sonidos
+FrmMenuMod.btnLUA.Text,LUA
+FrmMenuMod.btn3DVisor.Text,Visor 3D
+lblLoading.Text,Cargando
+MsgSelectModFirstTitle,Seleccion un Mod.
+MsgSelectModFirst,Debes cargar un mod para poder hacer eso.
+FrmMenuMod.$this.Text,Navegación
+SureRemoveModTitle,¿Seguro que quieres quitar este mod?
+SureRemoveMod,"Si quitas este mod, se cerrarán todas las ventanas abiertas relacionadas con él y se perderán los cambios no guardados. ¿Estás seguro de que quieres continuar?"
+FrmMainMenu.viewToolStripMenuItem.Text,Ver
+FrmMainMenu.navigationToolStripMenuItem.Text,Navegación

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PZModdingStudio.PZTypes
 {
-    internal class ModInfo
+    public class ModInfo
     {
 
         private string filePath = "";

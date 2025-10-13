@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PZModdingStudio.PZTypes
+﻿namespace PZModdingStudio.PZTypes
 {
-    internal class Mod
+    public class Mod
     {
         public Mod() { }
+
+        private int _repeatedId = 0;
 
         public Mod(ModInfo modInfo) {
             this.ModInfo = modInfo;
@@ -18,12 +14,27 @@ namespace PZModdingStudio.PZTypes
 
         public override string ToString()
         {
-            return ModInfo.id;
+            if(this._repeatedId == 0)
+            {
+                return ModInfo.id;
+            }
+            return ModInfo.id + " (" + _repeatedId + ")";
         }
 
         public bool IsValid()
         {
             return !string.IsNullOrWhiteSpace(ModInfo.id) && !string.IsNullOrWhiteSpace(ModInfo.name);
+        }
+
+        public int SetRepeatedNumber(int number)
+        {
+            _repeatedId = number;
+            return _repeatedId;
+        }
+
+        public int GetRepeatedId()
+        {
+            return _repeatedId;
         }
 
     }

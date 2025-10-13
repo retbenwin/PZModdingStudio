@@ -19,6 +19,8 @@ namespace PZModdingStudio
 
         private readonly string langsFolder = Path.Combine(Application.StartupPath, "Lang");
 
+        private readonly char scapeComma = '&';
+
         public string CurrentLanguage { get; private set; }
         public string FallbackLanguage { get; set; } = "en";
 
