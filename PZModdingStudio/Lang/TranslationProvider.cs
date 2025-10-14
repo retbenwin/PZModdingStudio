@@ -19,13 +19,13 @@ namespace PZModdingStudio
 
         private readonly string langsFolder = Path.Combine(Application.StartupPath, "Lang");
 
-        private readonly char scapeComma = '&';
-
         public string CurrentLanguage { get; private set; }
         public string FallbackLanguage { get; set; } = "en";
 
         // Devuelve los idiomas disponibles
         public IEnumerable<string> GetAvailableLanguages() => languagesStore.Keys;
+
+        public List<Action<TranslationProvider>> StaticTranslations { get; set; } = new List<Action<TranslationProvider>>();
 
         public TranslationProvider(string lang)
         {
@@ -153,6 +153,15 @@ namespace PZModdingStudio
                 if (c.ContextMenuStrip != null)
                 {
                     foreach (ToolStripItem it in c.ContextMenuStrip.Items) ApplyToToolStripItemRecursive(form, it);
+                }
+            }
+
+            // Traducciones estáticas (no asociadas a controles)
+            if (StaticTranslations != null)
+            {
+                foreach (var action in StaticTranslations)
+                {
+                    action?.Invoke(this);
                 }
             }
         }

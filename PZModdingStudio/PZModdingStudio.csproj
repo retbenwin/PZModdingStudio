@@ -64,8 +64,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Settings.cs" />
+    <Compile Include="Controls\BufferedTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\HiddenScrollPanel.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\FileExplorerTree.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\FrmBase.cs">
       <SubType>Form</SubType>
@@ -97,8 +103,17 @@
     <Compile Include="Forms\FrmSettings.Designer.cs">
       <DependentUpon>FrmSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FrmSolutionExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmSolutionExplorer.Designer.cs">
+      <DependentUpon>FrmSolutionExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\DeleteHelpers.cs" />
+    <Compile Include="Helpers\FilePropertiesHelper.cs" />
     <Compile Include="Lang\LanguageItem.cs" />
     <Compile Include="Lang\TranslationProvider.cs" />
+    <Compile Include="Lang\TraslationStatic.cs" />
     <Compile Include="ModsManager.cs" />
     <Compile Include="Parsers\InfoFile.cs" />
     <Compile Include="Program.cs" />
@@ -119,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmSettings.resx">
       <DependentUpon>FrmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmSolutionExplorer.resx">
+      <DependentUpon>FrmSolutionExplorer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

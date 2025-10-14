@@ -94,6 +94,11 @@ namespace PZModdingStudio
                 mod.SetRepeatedNumber(repeatedNumber);
             }
 
+            string folderPath = Path.GetDirectoryName(filePath);
+            var dir = new DirectoryInfo(folderPath);
+            string workSpacePath = dir.Parent?.FullName;
+            mod.SetWorkspacePath(workSpacePath);
+
             Mods.Add(mod);
             return true;
         }

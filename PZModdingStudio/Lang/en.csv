@@ -34,6 +34,36 @@ SureRemoveModTitle,Are you sure you want to unload this mod?
 SureRemoveMod,"If you unload this mod, all open windows related to it will be closed and you will lose any unsaved changes. Are you sure you want to continue?"
 FrmMainMenu.viewToolStripMenuItem.Text,View
 FrmMainMenu.navigationToolStripMenuItem.Text,Navigation
+FrmSolutionExplorer.$this.Text,Mod Explorer
+Reload,Reload Workspace Mod
+Folder,Folder
+Folder2,folder
+File,File
+File2,file
+Properties,Properties
+Delete,Delete
+New,New
+Open,Open
+OpenFileExplorer,Open in File Explorer
+CantDeleteRoot,Cannot remove root.
+CantDeleteError,Could not be deleted:
+ConfirmDelete,Send {type} '{name}' to Trash?
+ConfirmDeleteTitle,Confirm deletion
+DialogNewFolderInput,Name of the new folder:
+NewFolder,New Folder
+CantCreateFolderError,Could not create folder:
+CantCreateFileError,Could not create file:
+DialogNewFileInput,"File name (include extension, e.g. new.txt):"
+NewFile,New file
+Accept,Accept
+Cancel,Cancel
+Input,Input
+CantRenameRoot,Cannot rename root.
+CantRenameError,Could not rename:
+Rename,Rename
+FolderAlreadyExists,A file or folder named '{newName}' already exists.
+DialogRenameFolderInput,New folder name:
+DialogRenameFilenput,New file name:
 
 
 

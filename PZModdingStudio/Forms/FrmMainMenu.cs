@@ -16,7 +16,7 @@ namespace PZModdingStudio.Forms
     {
 
         private bool isInitializing = true;
-        private FrmBase navigationMenu = null;
+        private FrmSolutionExplorer navigationMenu = null;
 
         public DockPanel MainDockPanel
         {
@@ -28,8 +28,6 @@ namespace PZModdingStudio.Forms
             isInitializing = true;
             InitializeComponent();
             this.VisibleLoadingPanelWhenLoading = true;
-            PopulateComboMods();
-            FillNavigationMenu();
             isInitializing = false;
         }
 
@@ -46,9 +44,10 @@ namespace PZModdingStudio.Forms
         {
             if(navigationMenu == null || navigationMenu.IsDisposed)
             {
-                this.dockPanel.DockLeftPortion = 135;
-                navigationMenu = new FrmMenuMod();
-                navigationMenu.ParentForm = this;
+                //this.dockPanel.DockLeftPortion = 135;
+                this.dockPanel.DockLeftPortion = 300;
+                navigationMenu = new FrmSolutionExplorer(modsManager.SelectedMod);
+                navigationMenu.ParentMenuForm = this;
                 navigationMenu.Show(this.dockPanel, DockState.DockLeft);
             }
             else
@@ -79,7 +78,7 @@ namespace PZModdingStudio.Forms
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmSettings frm = new FrmSettings();
-            frm.ParentForm = this;
+            frm.ParentMenuForm = this;
             frm.ShowDialog(this);
         }
 
@@ -92,19 +91,32 @@ namespace PZModdingStudio.Forms
                 cboModList.SelectedIndex = cboModList.Items.Count - 1;
                 modsManager.SelectedMod = (PZTypes.Mod)cboModList.SelectedItem;
                 FillUnloadMenu();
+                if (navigationMenu != null && !navigationMenu.IsDisposed)
+                {
+                    navigationMenu.SetMod(modsManager.SelectedMod);
+                }
             }
             SetLoading(false);
         }
 
         private void cboModList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cboModList.SelectedIndex > -1)
+            bool changing = false;
+            if (modsManager.SelectedMod != (PZTypes.Mod)cboModList.SelectedItem)
+            {
+                changing = true;
+            }
+            if (cboModList.SelectedIndex > -1)
             {
                 modsManager.SelectedMod = (PZTypes.Mod)cboModList.SelectedItem;
             }
             else
             {
                 modsManager.SelectedMod = null;
+            }
+            if(changing && navigationMenu != null && !navigationMenu.IsDisposed )
+            {
+                navigationMenu.SetMod(modsManager.SelectedMod);
             }
         }
 
@@ -115,21 +127,29 @@ namespace PZModdingStudio.Forms
             {
                 return;
             }
+            bool unloaded = false;
             foreach (PZTypes.Mod mod in modsManager.Mods)
             {
                 if(((ToolStripMenuItem)sender).Text == mod.ToString())
                 {
-                    modsManager.UnloadMod(mod);
+                    unloaded = modsManager.UnloadMod(mod);
                     break;
                 }
             }
             if (cboModList.SelectedIndex > -1)
             {
                 modsManager.SelectedMod = (PZTypes.Mod)cboModList.SelectedItem;
+                if (unloaded && navigationMenu != null && !navigationMenu.IsDisposed)
+                {
+                    navigationMenu.SetMod(modsManager.SelectedMod);
+                }
             }
             else
             {
                 modsManager.SelectedMod = null;
+                if (unloaded && this.navigationMenu != null && !this.navigationMenu.IsDisposed) {
+                    this.navigationMenu.ResetWorkspace();
+                }
             }
             FillUnloadMenu();
         }
@@ -137,6 +157,19 @@ namespace PZModdingStudio.Forms
         private void navigationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FillNavigationMenu();
+        }
+
+        private void FrmMainMenu_Load(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                this.Invoke(new Action(() =>
+                {
+                    PopulateComboMods();
+                    FillNavigationMenu();
+                }));
+            });
+            TraslationStatic.ConfigureStaticTranslations(this.translator);
         }
     }
 }

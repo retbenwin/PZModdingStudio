@@ -12,7 +12,7 @@ namespace PZModdingStudio.Forms
 {
     public partial class FrmSettings : FrmBase
     {
-        private bool isInitializing = true;
+        private readonly bool isInitializing = true;
 
         public FrmSettings()
         {
@@ -54,17 +54,20 @@ namespace PZModdingStudio.Forms
 
         private void btnApply_Click(object sender, EventArgs e)
         {
+            if (isInitializing) return;
             ApplyChanges();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (isInitializing) return;
             ApplyChanges();
             this.Close();
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
+            if (isInitializing) return;
             this.Close();
         }
     }

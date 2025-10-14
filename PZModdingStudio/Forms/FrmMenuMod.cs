@@ -28,8 +28,8 @@ namespace PZModdingStudio.Forms
         {
             if (RequiredSelectedMod()) return;
             FrmLUAEditor frm = new FrmLUAEditor();
-            frm.ParentForm = this.ParentForm;
-            frm.Show(this.ParentForm.MainDockPanel, DockState.Document);
+            frm.ParentMenuForm = this.ParentMenuForm;
+            frm.Show(this.ParentMenuForm.MainDockPanel, DockState.Document);
         }
     }
 }

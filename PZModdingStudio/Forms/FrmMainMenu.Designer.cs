@@ -33,11 +33,11 @@
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unloadModToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.navigationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cboModList = new System.Windows.Forms.ComboBox();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.vS2015LightTheme = new WeifenLuo.WinFormsUI.Docking.VS2015LightTheme();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.navigationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,6 +83,21 @@
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.navigationToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(56, 25);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // navigationToolStripMenuItem
+            // 
+            this.navigationToolStripMenuItem.Name = "navigationToolStripMenuItem";
+            this.navigationToolStripMenuItem.Size = new System.Drawing.Size(156, 26);
+            this.navigationToolStripMenuItem.Text = "Navigation";
+            this.navigationToolStripMenuItem.Click += new System.EventHandler(this.navigationToolStripMenuItem_Click);
+            // 
             // cboModList
             // 
             this.cboModList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -107,21 +122,6 @@
             this.dockPanel.TabIndex = 0;
             this.dockPanel.Theme = this.vS2015LightTheme;
             // 
-            // viewToolStripMenuItem
-            // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.navigationToolStripMenuItem});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(56, 25);
-            this.viewToolStripMenuItem.Text = "View";
-            // 
-            // navigationToolStripMenuItem
-            // 
-            this.navigationToolStripMenuItem.Name = "navigationToolStripMenuItem";
-            this.navigationToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
-            this.navigationToolStripMenuItem.Text = "Navigation";
-            this.navigationToolStripMenuItem.Click += new System.EventHandler(this.navigationToolStripMenuItem_Click);
-            // 
             // FrmMainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -140,6 +140,7 @@
             this.Name = "FrmMainMenu";
             this.Text = "Project Zomboid Modding Studio";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.FrmMainMenu_Load);
             this.Controls.SetChildIndex(this.msMain, 0);
             this.Controls.SetChildIndex(this.cboModList, 0);
             this.Controls.SetChildIndex(this.dockPanel, 0);

@@ -18,7 +18,7 @@ namespace PZModdingStudio.Forms
         public TranslationProvider translator;
         public Config.Settings appSettings;
         public ModsManager modsManager;
-        public FrmMainMenu ParentForm { get; set; } = null;
+        public FrmMainMenu ParentMenuForm { get; set; } = null;
 
         public bool VisibleLoadingPanelWhenLoading { get; set; } = false;
 
@@ -74,13 +74,14 @@ namespace PZModdingStudio.Forms
                 int x = (this.ClientSize.Width - this.pnlLoading.Width) / 2;
                 int y = (this.ClientSize.Height - this.pnlLoading.Height) / 2;
                 this.pnlLoading.Location = new Point(x, y);
+                Application.DoEvents();
             }
             this.pnlLoading.Visible = isLoading && this.VisibleLoadingPanelWhenLoading;
             foreach (Control c in this.Controls)
             {
                 if (c == pnlLoading) continue;
                 //Desactivar todos los paneles
-                if (c is Panel || c is MenuStrip || c is SplitContainer || c is SplitterPanel || c is HiddenScrollPanel)
+                if (c is Panel || c is MenuStrip || c is SplitContainer || c is SplitterPanel || c is HiddenScrollPanel || c is FileExplorerTree)
                 {
                     c.Enabled = !isLoading;
                 }

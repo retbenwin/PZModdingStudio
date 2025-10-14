@@ -5,6 +5,8 @@
         public Mod() { }
 
         private int _repeatedId = 0;
+        private string _workspacePath;
+        private string _workspaceStatus;
 
         public Mod(ModInfo modInfo) {
             this.ModInfo = modInfo;
@@ -35,6 +37,26 @@
         public int GetRepeatedId()
         {
             return _repeatedId;
+        }
+
+        public string GetWorkspacePath()
+        {
+            return _workspacePath;
+        }
+
+        public void SetWorkspacePath(string path)
+        {
+            _workspacePath = path;
+        }
+
+        public string GetWorkspaceStatus()
+        {
+            return _workspaceStatus;
+        }
+
+        public void SetWorkspaceStatus(string status)
+        {
+            _workspaceStatus = status;
         }
 
     }

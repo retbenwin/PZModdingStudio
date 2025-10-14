@@ -33,3 +33,34 @@ SureRemoveModTitle,¿Seguro que quieres quitar este mod?
 SureRemoveMod,"Si quitas este mod, se cerrarán todas las ventanas abiertas relacionadas con él y se perderán los cambios no guardados. ¿Estás seguro de que quieres continuar?"
 FrmMainMenu.viewToolStripMenuItem.Text,Ver
 FrmMainMenu.navigationToolStripMenuItem.Text,Navegación
+FrmSolutionExplorer.$this.Text,Explorador de Mod
+Reload,Recargar espacio de Trabajo del Mod
+Folder,Carpeta
+Folder2,carpeta
+File,Archivo
+File2,archivo
+Properties,Propiedades
+Delete,Eliminar
+New,Nuevo
+Open, Abrir
+OpenFileExplorer,Abrir en el Explorador de Archivos
+CantDeleteRoot,No se puede eliminar la raíz.
+CantDeleteError,No se pudo eliminar:
+ConfirmDelete,¿Enviar {type} '{name}' a la Papelera?
+ConfirmDeleteTitle,Confirmar eliminación
+DialogNewFolderInput,Nombre de la nueva carpeta:
+NewFolder,Nueva Carpeta
+CantCreateFolderError,No se pudo crear la carpeta:
+CantCreateFileError,No se pudo crear el archivo:
+DialogNewFileInput,"Nombre del archivo (incluye extensión, p.e. Nuevo.txt):"
+NewFile,Nuevo Archivo
+Accept,Aceptar
+Cancel,Cancelar
+Input,Entrada
+CantRenameRoot,No se puede renombrar la raíz.
+CantRenameError,No se pudo renombrar:
+Rename,Renombrar
+FolderAlreadyExists,Ya existe un archivo o carpeta llamado '{newName}' en esta ubicación.
+DialogRenameFolderInput, Nuevo nombre de la carpeta:
+DialogRenameFilenput,Nuevo nombre del archivo:
+
