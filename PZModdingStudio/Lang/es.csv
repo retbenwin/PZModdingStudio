@@ -9,6 +9,7 @@ FrmSettings.lblLanguage.Text,Seleccionar idioma:
 FrmSettings.btnApply.Text,Aplicar
 FrmSettings.btnOk.Text,Aceptar
 FrmSettings.btnBack.Text,Volver
+LoadModDialog,Cargar Mod
 LoadModDialogFilter,Mod info Archivos
 LoadModDialogFilterAllFIles,Todos los archivos
 Error,Error
@@ -64,4 +65,6 @@ FolderAlreadyExists,Ya existe un archivo o carpeta llamado '{newName}' en esta u
 DialogRenameFolderInput, Nuevo nombre de la carpeta:
 DialogRenameFilenput,Nuevo nombre del archivo:
 FrmMainMenu.resetZoomToolStripMenuItem.Text,Restablecer zoom
-
+FrmMainMenu.searchInEditorToolStripMenuItem.Text,Buscar en el editor
+NoActiveEditor,No hay ningún editor activo.
+Find,Buscar

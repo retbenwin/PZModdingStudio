@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PZModdingStudio.Editor;
+using ScintillaNET;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +19,7 @@ namespace PZModdingStudio.Forms
 
         private bool isInitializing = true;
         private FrmSolutionExplorer navigationMenu = null;
+        private SearchSystem searchSystem = null;
 
         public DockPanel MainDockPanel
         {
@@ -29,6 +32,13 @@ namespace PZModdingStudio.Forms
             InitializeComponent();
             this.VisibleLoadingPanelWhenLoading = true;
             isInitializing = false;
+        }
+
+        public override void ApplyTranslations()
+        {
+            base.ApplyTranslations();
+            if(searchSystem != null)
+                searchSystem.ApplyTranslations();
         }
 
         private void PopulateComboMods()
@@ -169,6 +179,7 @@ namespace PZModdingStudio.Forms
                     FillNavigationMenu();
                 }));
             });
+            searchSystem = new SearchSystem(this);
             TraslationStatic.ConfigureStaticTranslations(this.translator);
         }
 
@@ -191,5 +202,19 @@ namespace PZModdingStudio.Forms
             frm.Show(this.dockPanel, DockState.Document);
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.F))
+            {
+                searchSystem.OpenFindForActiveEditor();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void searchInEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            searchSystem.OpenFindForActiveEditor();
+        }
     }
 }

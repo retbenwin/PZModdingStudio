@@ -35,12 +35,13 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.navigationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetZoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchInEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cboModList = new System.Windows.Forms.ComboBox();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.vS2015LightTheme = new WeifenLuo.WinFormsUI.Docking.VS2015LightTheme();
-            this.resetZoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -91,7 +92,8 @@
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.navigationToolStripMenuItem,
-            this.resetZoomToolStripMenuItem});
+            this.resetZoomToolStripMenuItem,
+            this.searchInEditorToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(56, 25);
             this.viewToolStripMenuItem.Text = "View";
@@ -99,9 +101,23 @@
             // navigationToolStripMenuItem
             // 
             this.navigationToolStripMenuItem.Name = "navigationToolStripMenuItem";
-            this.navigationToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.navigationToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
             this.navigationToolStripMenuItem.Text = "Navigation";
             this.navigationToolStripMenuItem.Click += new System.EventHandler(this.navigationToolStripMenuItem_Click);
+            // 
+            // resetZoomToolStripMenuItem
+            // 
+            this.resetZoomToolStripMenuItem.Name = "resetZoomToolStripMenuItem";
+            this.resetZoomToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.resetZoomToolStripMenuItem.Text = "Reset Zoom";
+            this.resetZoomToolStripMenuItem.Click += new System.EventHandler(this.resetZoomToolStripMenuItem_Click);
+            // 
+            // searchInEditorToolStripMenuItem
+            // 
+            this.searchInEditorToolStripMenuItem.Name = "searchInEditorToolStripMenuItem";
+            this.searchInEditorToolStripMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.searchInEditorToolStripMenuItem.Text = "Buscar en Editor";
+            this.searchInEditorToolStripMenuItem.Click += new System.EventHandler(this.searchInEditorToolStripMenuItem_Click);
             // 
             // testToolStripMenuItem
             // 
@@ -142,14 +158,7 @@
             this.dockPanel.TabIndex = 0;
             this.dockPanel.Theme = this.vS2015LightTheme;
             // 
-            // resetZoomToolStripMenuItem
-            // 
-            this.resetZoomToolStripMenuItem.Name = "resetZoomToolStripMenuItem";
-            this.resetZoomToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
-            this.resetZoomToolStripMenuItem.Text = "Reset Zoom";
-            this.resetZoomToolStripMenuItem.Click += new System.EventHandler(this.resetZoomToolStripMenuItem_Click);
-            // 
-            // FrmCodeEditor
+            // FrmMainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -192,6 +201,7 @@
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetZoomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem searchInEditorToolStripMenuItem;
     }
 }
 

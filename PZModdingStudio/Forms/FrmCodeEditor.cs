@@ -21,6 +21,10 @@ namespace PZModdingStudio.Forms
         private readonly Dictionary<string, ILanguageDefinition> registeredLanguages =
             new Dictionary<string, ILanguageDefinition>(StringComparer.OrdinalIgnoreCase);
 
+
+        public  Scintilla scintillaInstance { get { return scintilla1; } }
+
+
         public FrmCodeEditor()
         {
             InitializeComponent();

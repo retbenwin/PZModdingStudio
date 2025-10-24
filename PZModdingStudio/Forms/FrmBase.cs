@@ -9,10 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using PZModdingStudio.Lang;
 
 namespace PZModdingStudio.Forms
 {
-    public partial class FrmBase : DockContent
+    public partial class FrmBase : DockContent, ITranslatable
     {
 
         public TranslationProvider translator;
