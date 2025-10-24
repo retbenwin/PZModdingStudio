@@ -63,4 +63,5 @@ Rename,Renombrar
 FolderAlreadyExists,Ya existe un archivo o carpeta llamado '{newName}' en esta ubicación.
 DialogRenameFolderInput, Nuevo nombre de la carpeta:
 DialogRenameFilenput,Nuevo nombre del archivo:
+FrmMainMenu.resetZoomToolStripMenuItem.Text,Restablecer zoom
 

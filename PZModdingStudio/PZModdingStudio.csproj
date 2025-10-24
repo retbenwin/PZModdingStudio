@@ -73,29 +73,26 @@
     <Compile Include="Controls\FileExplorerTree.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Editor\ILanguageDefinition.cs" />
+    <Compile Include="Editor\LuaLanguage.cs" />
+    <Compile Include="Editor\TextPlainLanguage.cs" />
     <Compile Include="Forms\FrmBase.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\FrmBase.Designer.cs">
       <DependentUpon>FrmBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FrmLUAEditor.cs">
+    <Compile Include="Forms\FrmCodeEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FrmLUAEditor.Designer.cs">
-      <DependentUpon>FrmLUAEditor.cs</DependentUpon>
+    <Compile Include="Forms\FrmCodeEditor.Designer.cs">
+      <DependentUpon>FrmCodeEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FrmMainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\FrmMainMenu.Designer.cs">
       <DependentUpon>FrmMainMenu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FrmMenuMod.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FrmMenuMod.Designer.cs">
-      <DependentUpon>FrmMenuMod.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FrmSettings.cs">
       <SubType>Form</SubType>
@@ -123,14 +120,11 @@
     <EmbeddedResource Include="Forms\FrmBase.resx">
       <DependentUpon>FrmBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FrmLUAEditor.resx">
-      <DependentUpon>FrmLUAEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\FrmCodeEditor.resx">
+      <DependentUpon>FrmCodeEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmMainMenu.resx">
       <DependentUpon>FrmMainMenu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FrmMenuMod.resx">
-      <DependentUpon>FrmMenuMod.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmSettings.resx">
       <DependentUpon>FrmSettings.cs</DependentUpon>

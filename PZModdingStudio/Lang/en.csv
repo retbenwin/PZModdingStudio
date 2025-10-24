@@ -64,6 +64,7 @@ Rename,Rename
 FolderAlreadyExists,A file or folder named '{newName}' already exists.
 DialogRenameFolderInput,New folder name:
 DialogRenameFilenput,New file name:
+FrmMainMenu.resetZoomToolStripMenuItem.Text,Reset Zoom
 
 
 

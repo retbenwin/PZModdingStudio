@@ -171,5 +171,25 @@ namespace PZModdingStudio.Forms
             });
             TraslationStatic.ConfigureStaticTranslations(this.translator);
         }
+
+        private void resetZoomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var contents = MainDockPanel.Contents;
+            foreach (IDockContent content in contents)
+            {
+                if (content != null && content is FrmCodeEditor)
+                {
+                    ((FrmCodeEditor)content).ResetZoom();
+                }
+            }
+
+        }
+
+        private void editorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new FrmCodeEditor();
+            frm.Show(this.dockPanel, DockState.Document);
+        }
+
     }
 }
