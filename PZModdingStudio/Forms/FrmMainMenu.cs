@@ -20,6 +20,7 @@ namespace PZModdingStudio.Forms
         private bool isInitializing = true;
         private FrmSolutionExplorer navigationMenu = null;
         private SearchSystem searchSystem = null;
+        private EditorManager editorManager = null;
 
         public DockPanel MainDockPanel
         {
@@ -180,6 +181,7 @@ namespace PZModdingStudio.Forms
                 }));
             });
             searchSystem = new SearchSystem(this);
+            editorManager = new EditorManager(this);
             TraslationStatic.ConfigureStaticTranslations(this.translator);
         }
 
@@ -193,13 +195,11 @@ namespace PZModdingStudio.Forms
                     ((FrmCodeEditor)content).ResetZoom();
                 }
             }
-
         }
 
         private void editorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var frm = new FrmCodeEditor();
-            frm.Show(this.dockPanel, DockState.Document);
+            editorManager.CreateNewEditor();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

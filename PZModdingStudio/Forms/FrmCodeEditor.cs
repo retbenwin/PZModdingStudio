@@ -25,6 +25,8 @@ namespace PZModdingStudio.Forms
         public  Scintilla scintillaInstance { get { return scintilla1; } }
 
 
+        public string CurrentFile { get { return currentFile; } }
+
         public FrmCodeEditor()
         {
             InitializeComponent();
@@ -379,6 +381,20 @@ namespace PZModdingStudio.Forms
 
         // ---------------- Abrir / Guardar ----------------
 
+        public void OpenFile(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+                return;
+            currentFile = filePath;
+            scintilla1.Text = File.ReadAllText(currentFile);
+            // Detectar lenguaje por extensión
+            var ext = Path.GetExtension(currentFile).ToLower();
+            var lang = registeredLanguages.Values
+                .FirstOrDefault(l => l.FileExtensions.Contains(ext))
+                ?? registeredLanguages["Texto plano"];
+            SetLanguage(lang.Name);
+        }
+
         private void AbrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var dlg = new OpenFileDialog())
@@ -386,20 +402,10 @@ namespace PZModdingStudio.Forms
                 dlg.Filter = "All files (*.*)|*.*";
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    currentFile = dlg.FileName;
-                    scintilla1.Text = File.ReadAllText(currentFile);
-
-                    // Detectar lenguaje por extensión
-                    var ext = Path.GetExtension(currentFile).ToLower();
-                    var lang = registeredLanguages.Values
-                        .FirstOrDefault(l => l.FileExtensions.Contains(ext))
-                        ?? registeredLanguages["Texto plano"];
-
-                    SetLanguage(lang.Name);
+                    OpenFile(dlg.FileName);
                 }
             }
         }
-
 
         private void GuardarToolStripMenuItem_Click(object sender, EventArgs e)
         {

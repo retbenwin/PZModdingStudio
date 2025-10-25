@@ -68,3 +68,11 @@ FrmMainMenu.resetZoomToolStripMenuItem.Text,Restablecer zoom
 FrmMainMenu.searchInEditorToolStripMenuItem.Text,Buscar en el editor
 NoActiveEditor,No hay ningún editor activo.
 Find,Buscar
+FrmFind.chkMatchCase.Text,Coincidir mayúsculas y minúsculas
+FrmFind.chkWholeWord.Text,Palabras completas
+FrmFind.chkRegex.Text,Expresión regular
+FrmFind.chkWrap.Text,Ajuste de línea
+FrmFind.btnPrev.Text,Buscar anterior
+FrmFind.btnNext.Text,Buscar siguiente
+NotFound,No encontrado
+InvalidRegex1,Expresión regular inválida:

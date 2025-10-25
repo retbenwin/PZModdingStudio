@@ -42,7 +42,7 @@
             this.txtFind.Dock = System.Windows.Forms.DockStyle.Top;
             this.txtFind.Location = new System.Drawing.Point(0, 0);
             this.txtFind.Name = "txtFind";
-            this.txtFind.Size = new System.Drawing.Size(386, 26);
+            this.txtFind.Size = new System.Drawing.Size(303, 26);
             this.txtFind.TabIndex = 1;
             this.txtFind.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtFind_KeyDown);
             // 
@@ -89,9 +89,10 @@
             // btnPrev
             // 
             this.btnPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnPrev.AutoSize = true;
             this.btnPrev.Location = new System.Drawing.Point(12, 178);
             this.btnPrev.Name = "btnPrev";
-            this.btnPrev.Size = new System.Drawing.Size(96, 33);
+            this.btnPrev.Size = new System.Drawing.Size(85, 33);
             this.btnPrev.TabIndex = 6;
             this.btnPrev.Text = "Find Prev";
             this.btnPrev.UseVisualStyleBackColor = true;
@@ -100,9 +101,10 @@
             // btnNext
             // 
             this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNext.Location = new System.Drawing.Point(280, 178);
+            this.btnNext.AutoSize = true;
+            this.btnNext.Location = new System.Drawing.Point(207, 181);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(96, 33);
+            this.btnNext.Size = new System.Drawing.Size(86, 30);
             this.btnNext.TabIndex = 7;
             this.btnNext.Text = "Find Next";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -112,7 +114,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(386, 220);
+            this.ClientSize = new System.Drawing.Size(303, 220);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnPrev);
             this.Controls.Add(this.chkWrap);
@@ -126,8 +128,9 @@
             | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
             this.HideOnClose = true;
             this.Margin = new System.Windows.Forms.Padding(6);
-            this.MinimumSize = new System.Drawing.Size(259, 259);
+            this.MinimumSize = new System.Drawing.Size(319, 259);
             this.Name = "FrmFind";
+            this.TabText = "";
             this.Text = "Find";
             this.Controls.SetChildIndex(this.txtFind, 0);
             this.Controls.SetChildIndex(this.chkMatchCase, 0);

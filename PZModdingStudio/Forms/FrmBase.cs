@@ -109,6 +109,8 @@ namespace PZModdingStudio.Forms
                 this.pnlLoading.Location = new Point(x, y);
             }
         }
+
+
     }
 
 }

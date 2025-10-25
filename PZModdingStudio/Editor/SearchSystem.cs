@@ -27,8 +27,6 @@ namespace PZModdingStudio.Editor
             this.frmMainMenu = frmMainMenu;
             frmMainMenu.MainDockPanel.ActiveContentChanged += new System.EventHandler(this.dockPanel_ActiveContentChanged);
             findForm = new FrmFind();
-            //findForm.Show(dockPanel, DockState.Float);
-            //findForm.Hide();
             translator = TranslationProvider.GetInstance();
             ApplyTranslations();
             instance = this;
@@ -65,8 +63,7 @@ namespace PZModdingStudio.Editor
             }
 
             AttachScintilla(ed.scintillaInstance, ed);
-
-            ShowFindCentered();
+            findForm.ShowCentered(frmMainMenu);
         }
 
         private void AttachScintilla(Scintilla scintilla, FrmCodeEditor ownerEditor = null)
@@ -90,11 +87,5 @@ namespace PZModdingStudio.Editor
             }
         }
 
-        private void ShowFindCentered()
-        {
-            findForm.Show(frmMainMenu.MainDockPanel, DockState.Float);
-            findForm.Activate();
-            findForm.FocusFindTextBox();
-        }
     }
 }

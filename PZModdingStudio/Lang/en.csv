@@ -68,3 +68,11 @@ FrmMainMenu.resetZoomToolStripMenuItem.Text,Reset Zoom
 FrmMainMenu.searchInEditorToolStripMenuItem.Text,Search in Editor
 NoActiveEditor,No active editor.
 Find,Find
+FrmFind.chkMatchCase.Text,Match case
+FrmFind.chkWholeWord.Text,Whole word
+FrmFind.chkRegex.Text,Regex
+FrmFind.chkWrap.Text,Wrap around
+FrmFind.btnPrev.Text,Find Prev
+FrmFind.btnNext.Text,Find Next
+NotFound,Not Found
+InvalidRegex1,Invalid Regex:

@@ -16,6 +16,7 @@ namespace PZModdingStudio.Forms
     {
 
         private Scintilla _scintilla;
+        private bool _firstShow = true;
 
         public FrmFind()
         {
@@ -87,12 +88,12 @@ namespace PZModdingStudio.Forms
                 }
                 else
                 {
-                    MessageBox.Show("No encontrado", "Find", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(translator.Get("NotFound") + ".", translator.Get("Find"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else
             {
-                MessageBox.Show("No encontrado", "Find", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(translator.Get("NotFound") + ".", translator.Get("Find"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -122,7 +123,7 @@ namespace PZModdingStudio.Forms
                 }
                 catch (ArgumentException ex)
                 {
-                    MessageBox.Show("Regex inválido: " + ex.Message);
+                    MessageBox.Show(translator.Get("InvalidRegex1") + " " + ex.Message);
                     return;
                 }
             }
@@ -160,7 +161,7 @@ namespace PZModdingStudio.Forms
                     }
                     catch (ArgumentException ex)
                     {
-                        MessageBox.Show("Regex inválido: " + ex.Message);
+                        MessageBox.Show(translator.Get("InvalidRegex1") + " " + ex.Message);
                         return;
                     }
                 }
@@ -177,8 +178,29 @@ namespace PZModdingStudio.Forms
                 }
             }
 
-            MessageBox.Show("No encontrado", "Find", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(translator.Get("NotFound") + ".", translator.Get("Find"), MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        public void ShowCentered(FrmMainMenu parentForm)
+        {
+            if (!this._firstShow)
+            {
+                this.Show(parentForm.MainDockPanel);
+                return;
+            }
+            var work = Screen.FromControl(parentForm).WorkingArea;
+            int width = 350;
+            int height = 320;
+            int x = (work.Width - width) / 2;
+            int y = (work.Height - height) / 2;
+            Rectangle locationSize = new Rectangle(x, y, width, height);
+
+            this.Show(parentForm.MainDockPanel, locationSize);
+            this.Activate();
+            this.FocusFindTextBox();
+            this._firstShow = false;
+        }
+
 
     }
 }

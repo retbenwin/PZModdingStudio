@@ -73,6 +73,7 @@
     <Compile Include="Controls\FileExplorerTree.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Editor\EditorManager.cs" />
     <Compile Include="Editor\ILanguageDefinition.cs" />
     <Compile Include="Editor\LuaLanguage.cs" />
     <Compile Include="Editor\SearchSystem.cs" />
@@ -114,6 +115,7 @@
       <DependentUpon>FrmSolutionExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DeleteHelpers.cs" />
+    <Compile Include="Helpers\FileExtension.cs" />
     <Compile Include="Helpers\FilePropertiesHelper.cs" />
     <Compile Include="Lang\ITranslatable.cs" />
     <Compile Include="Lang\LanguageItem.cs" />

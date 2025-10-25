@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 // Asegúrate de tener referencia a Microsoft.VisualBasic
 using Microsoft.VisualBasic.FileIO;
+using PZModdingStudio.Forms;
 using PZModdingStudio.Helpers;
 
 public class FileExplorerTree : UserControl
@@ -305,13 +306,29 @@ public class FileExplorerTree : UserControl
     private void Tree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
     {
         if (e.Node.Tag is string path && File.Exists(path))
-            System.Diagnostics.Process.Start(path);
+        {
+            Form form = this.FindForm();
+            if (form is FrmBase mainMenu && ((FrmBase)mainMenu).ParentMenuForm != null)
+            {
+                FileExtension.OpenFile(path);
+                return;
+            }
+            FileExtension.OpenFileWithDefaultProgram(path);
+        }
     }
 
     private void OpenSelected()
     {
         if (tree.SelectedNode?.Tag is string path && File.Exists(path))
-            System.Diagnostics.Process.Start(path);
+        {
+            Form form = this.FindForm();
+            if(form is FrmBase mainMenu && ((FrmBase)mainMenu).ParentMenuForm != null)
+            {
+                FileExtension.OpenFile(path);
+                return;
+            }
+            FileExtension.OpenFileWithDefaultProgram(path);
+        }
     }
 
     private void ShowProperties()
