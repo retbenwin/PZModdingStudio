@@ -76,3 +76,34 @@ FrmFind.btnPrev.Text,Find Prev
 FrmFind.btnNext.Text,Find Next
 NotFound,Not Found
 InvalidRegex1,Invalid Regex:
+PlainText,Plain Text
+Lua,LUA
+Format,Format
+Col,Col
+Row,Row
+Editor,Editor
+untitled,untitled
+FrmCodeEditor.undoToolStripMenuItem.Text,Undo
+FrmCodeEditor.redoToolStripMenuItem.Text,Redo
+FrmCodeEditor.cutToolStripMenuItem.Text,Cut
+FrmCodeEditor.copyToolStripMenuItem.Text,Copy
+FrmCodeEditor.pasteToolStripMenuItem.Text,Paste
+FrmCodeEditor.selectAllToolStripMenuItem.Text,Select All
+FrmCodeEditor.searchToolStripMenuItem.Text,Search...
+FrmMainMenu.loadFileToolStripMenuItem.Text,Load File
+FrmMainMenu.saveFileToolStripMenuItem.Text,Save File
+FrmMainMenu.saveFileAsToolStripMenuItem.Text,Save File AS
+FrmMainMenu.saveAllFilesToolStripMenuItem.Text,Save All Files
+OpenWithP1,Open with {param1}
+TextEditor,Text Editor
+ModInfoEditor,Mod Info Editor
+ImageEditor,Image Editor
+ImageViewer,Image Viewer
+AudioEditor,Audio Editor
+AudioPlayer,Audio Player
+VideoEditor,Video Editor
+VideoPlayer,Video Player
+Models3DEditor,3D Models Editor
+Model3DViewer,3D Models Viewer
+UnsupportedFileType,This file type is not supported for editing or viewing.
+OpenWith,Open with

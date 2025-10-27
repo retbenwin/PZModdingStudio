@@ -2,30 +2,20 @@
 using PZModdingStudio.Forms;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static PZModdingStudio.Helpers.FileExtension;
+using System.Windows.Forms;
+using static PZModdingStudio.Helpers.FileManagement;
 
 namespace PZModdingStudio.Helpers
 {
-    public static class FileExtension
+    public static class FileManagement
     {
-        public enum EditorType
-        {
-            Text,
-            Info,
-            Image,
-            ImageViewer,
-            Audio,
-            AudioViewer,
-            Video,
-            VideoViewer,
-            Models,
-            ModelsViewer,
-        }
 
         /// <summary>
         /// Contenedor para la información de un tipo de archivo: nombre lógico y editores soportados.
@@ -46,11 +36,11 @@ namespace PZModdingStudio.Helpers
         // Rellena o modifica las entradas según necesites.
         private static readonly Dictionary<string, FileTypeInfo> supportedExtensions = new Dictionary<string, FileTypeInfo>(StringComparer.OrdinalIgnoreCase)
         {
-            { ".info", new FileTypeInfo("InfoFile", EditorType.Text, EditorType.Info) },
-            { ".txt",  new FileTypeInfo("TextFile", EditorType.Text) },
-            { ".lua",  new FileTypeInfo("LuaScriptFile", EditorType.Text) },
-            { ".xml",  new FileTypeInfo("XMLFile", EditorType.Text) },
-            { ".json", new FileTypeInfo("JSONFile", EditorType.Text) },
+            { ".info", new FileTypeInfo("InfoFile", EditorType.ModInfoEditor, EditorType.TextEditor ) },
+            { ".txt",  new FileTypeInfo("TextFile", EditorType.TextEditor) },
+            { ".lua",  new FileTypeInfo("LuaScriptFile", EditorType.TextEditor) },
+            { ".xml",  new FileTypeInfo("XMLFile", EditorType.TextEditor) },
+            { ".json", new FileTypeInfo("JSONFile", EditorType.TextEditor) },
         };
 
         public static bool IsSupportedFileExtension(string fileName)
@@ -130,12 +120,38 @@ namespace PZModdingStudio.Helpers
             return editors.Contains(editor);
         }
 
+        public static void OpenFile()
+        {
+            using (var dlg = new OpenFileDialog())
+            {
+                dlg.Filter = $"{TranslationProvider.GetInstance().Get("LoadModDialogFilterAllFIles")} (*.*)|*.*";
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    if (IsSupportedFileExtension(dlg.FileName) || !Path.HasExtension(dlg.FileName))
+                    {
+                        OpenFile(dlg.FileName);
+                    }
+                    else
+                    {
+                        MessageBox.Show(TranslationProvider.GetInstance().Get("UnsupportedFileType"), TranslationProvider.GetInstance().Get("Warning"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+        }
+
         public static void OpenFile(string filePath)
         {
             // Usamos directamente el path: Path.GetExtension funciona tanto con nombres como con paths completos
+            if (File.Exists(filePath) && !Path.HasExtension(filePath))
+            {
+                //Archivo sin extensión, abrir siempre con el editor de texto.
+                OpenFileWithEditor(filePath);
+                return;
+            }
+
             if (IsSupportedFileExtension(filePath))
             {
-                OpenFileWithEditor(filePath);
+                OpenFileWithFirstEditor(filePath);
             }
             else
             {
@@ -150,25 +166,40 @@ namespace PZModdingStudio.Helpers
 
         public static void OpenFileWithEditor(string filePath)
         {
-            OpenFileWithEditor(filePath, EditorType.Text);
+            OpenFileWithEditor(filePath, EditorType.TextEditor);
         }
 
         public static void OpenFileWithEditor(string filePath, EditorType editorType)
         {
             if(HasEditorForExtensionFilePath(filePath, editorType))
             {
-                switch (editorType)
-                {
-                    case EditorType.Text:
-                        EditorManager.GetInstance().OpenFileWithEditor(filePath);
-                        break;
-                    default:
-                        // Otros tipos de editor no implementados aún
-                        OpenFileWithDefaultProgram(filePath);
-                        break;
-                }
+                EditorManager.GetInstance().OpenFileWithEditor(filePath, editorType);
+                return;
             }
+            OpenFileWithDefaultProgram(filePath);
         }
+
+        public static void OpenFileWithFirstEditor(string filePath)
+        {
+            IReadOnlyList<EditorType> editorTypes = GetSupportedEditorsByExtension(filePath);
+            if (editorTypes.Count > 0)
+            {
+                EditorManager.GetInstance().OpenFileWithEditor(filePath, editorTypes[0]);
+                return;
+            }
+            OpenFileWithDefaultProgram(filePath);
+        }
+
+        public static string GetEditorTypeDescription(EditorType value)
+        {
+            FieldInfo field = typeof(EditorType).GetField(value.ToString());
+
+            DescriptionAttribute attribute =
+                (DescriptionAttribute)Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
+
+            return attribute?.Description ?? value.ToString();
+        }
+
 
     }
 }

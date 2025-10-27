@@ -12,7 +12,7 @@ using static ScintillaNET.Style;
 
 namespace PZModdingStudio.Forms
 {
-    public partial class FrmCodeEditor : FrmBase
+    public partial class FrmCodeEditor : FrmBase, IEditor
     {
         private string currentFile = null;
 
@@ -21,11 +21,9 @@ namespace PZModdingStudio.Forms
         private readonly Dictionary<string, ILanguageDefinition> registeredLanguages =
             new Dictionary<string, ILanguageDefinition>(StringComparer.OrdinalIgnoreCase);
 
-
         public  Scintilla scintillaInstance { get { return scintilla1; } }
-
-
         public string CurrentFile { get { return currentFile; } }
+        public EditorType Type { get { return EditorType.TextEditor; } }
 
         public FrmCodeEditor()
         {
@@ -34,6 +32,16 @@ namespace PZModdingStudio.Forms
             // Suscribir handlers básicos del formulario
             this.Load += MainForm_Load;
             // No suscribimos aquí Scintilla event handlers hasta que se configure el lenguaje
+        }
+
+        public override void ApplyTranslations()
+        {
+            base.ApplyTranslations();
+            int line = scintilla1.LineFromPosition(scintilla1.CurrentPosition) + 1;
+            int col = scintilla1.GetColumn(scintilla1.CurrentPosition) + 1;
+            if (toolStripStatusLabel1 != null)
+                toolStripStatusLabel1.Text = $"{translator.Get("Format")}: {(translator.Get(currentLanguage?.Name ?? "—"))}  |  {translator.Get("Row")}: {line} {translator.Get("Col")}: {col}";
+            UpdateTitle();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -54,7 +62,7 @@ namespace PZModdingStudio.Forms
             // var cs = new CSharpLanguage(); registeredLanguages[cs.Name] = cs;
 
             // Seleccionar lenguaje por defecto
-            SetLanguage(lua.Name);
+            SetLanguage(textPlain.Name);
         }
 
         private void SetLanguage(string languageName)
@@ -82,9 +90,42 @@ namespace PZModdingStudio.Forms
             scintilla1.KeyDown += Scintilla1_KeyDown;
 
             // Actualizar UI
-            this.Text = $"Editor - {lang.Name}";
+            UpdateTitle();
             if (toolStripStatusLabel1 != null)
-                toolStripStatusLabel1.Text = $"Lenguaje: {lang.Name}";
+                toolStripStatusLabel1.Text = $"{translator.Get("Format")}: {(translator.Get(lang.Name))}";
+        }
+
+        public void UpdateTitle()
+        {
+            string title = "";
+            if(this.CurrentFile != null)
+            {
+                title = $"{Path.GetFileName(this.CurrentFile)}";
+                this.DockHandler.ToolTipText = currentFile;
+            }
+            else if(currentLanguage != null)
+            {
+                title = $"{translator.Get("Editor")} - {(translator.Get(currentLanguage.Name))}";
+                this.DockHandler.ToolTipText = "";
+            }
+            else
+            {
+                title = $"{translator.Get("Editor")}";
+                this.DockHandler.ToolTipText = "";
+            }
+            if (scintilla1.Modified)
+            {
+                title = "* " + title;
+            }
+            this.Text = title;
+        }
+
+        public void UpdateStatusLabel()
+        {
+            int line = scintilla1.LineFromPosition(scintilla1.CurrentPosition) + 1;
+            int col = scintilla1.GetColumn(scintilla1.CurrentPosition) + 1;
+            if (toolStripStatusLabel1 != null)
+                toolStripStatusLabel1.Text = $"{translator.Get("Format")}: {(translator.Get(currentLanguage?.Name ?? "—"))}  |  {translator.Get("Row")}: {line} {translator.Get("Col")}: {col}";
         }
 
         // ---------------- Handlers Scintilla / Autocomplete / CallTips ----------------
@@ -94,10 +135,8 @@ namespace PZModdingStudio.Forms
             var s = scintilla1;
             if (s == null) return;
 
-            int line = s.LineFromPosition(s.CurrentPosition) + 1;
-            int col = s.GetColumn(s.CurrentPosition) + 1;
-            if (toolStripStatusLabel1 != null)
-                toolStripStatusLabel1.Text = $"Lenguaje: {(currentLanguage?.Name ?? "—")}  |  Línea: {line} Col: {col}";
+            UpdateStatusLabel();
+            UpdateTitle();
 
             // Brace matching (intenta resaltar pares)
             var pos = s.CurrentPosition;
@@ -391,42 +430,63 @@ namespace PZModdingStudio.Forms
             var ext = Path.GetExtension(currentFile).ToLower();
             var lang = registeredLanguages.Values
                 .FirstOrDefault(l => l.FileExtensions.Contains(ext))
-                ?? registeredLanguages["Texto plano"];
+                ?? registeredLanguages["PlainText"];
             SetLanguage(lang.Name);
+            scintilla1.EmptyUndoBuffer();
+            scintilla1.SetSavePoint();
         }
 
-        private void AbrirToolStripMenuItem_Click(object sender, EventArgs e)
+        public void NewFile()
         {
-            using (var dlg = new OpenFileDialog())
+            currentFile = null;
+            scintilla1.Text = "";
+            SetLanguage(registeredLanguages["PlainText"].Name); // por defecto
+        }
+
+        public void SaveFile()
+        {
+            if (string.IsNullOrEmpty(currentFile))
+                SaveFileAs();
+            else
             {
-                dlg.Filter = "All files (*.*)|*.*";
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    OpenFile(dlg.FileName);
-                }
+                File.WriteAllText(currentFile, scintilla1.Text ?? "", Encoding.UTF8);
+                scintilla1.SetSavePoint();
+                UpdateTitle();
             }
         }
 
-        private void GuardarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(currentFile))
-                GuardarComoToolStripMenuItem_Click(sender, e);
-            else
-                File.WriteAllText(currentFile, scintilla1.Text ?? "", Encoding.UTF8);
-        }
-
-        private void GuardarComoToolStripMenuItem_Click(object sender, EventArgs e)
+        public void SaveFileAs()
         {
             using (var dlg = new SaveFileDialog())
             {
-                dlg.Filter = "Lua files (*.lua)|*.lua|All files (*.*)|*.*";
+                dlg.FileName = currentFile != null ? Path.GetFileName(currentFile) : $"{translator.Get("untitled")}{currentLanguage.FileExtensions.First()}";
+                dlg.Filter = $"{translator.Get("LoadModDialogFilterAllFIles")} (*.*)|*.*";
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     currentFile = dlg.FileName;
                     File.WriteAllText(currentFile, scintilla1.Text ?? "", Encoding.UTF8);
+                    var ext = Path.GetExtension(currentFile).ToLower();
+                    var lang = registeredLanguages.Values
+                        .FirstOrDefault(l => l.FileExtensions.Contains(ext))
+                        ?? registeredLanguages["PlainText"];
+                    SetLanguage(lang.Name);
+                    scintilla1.SetSavePoint();
                 }
             }
         }
+
+        public static void OpenFile()
+        {
+            using (var dlg = new OpenFileDialog())
+            {
+                dlg.Filter = $"{TranslationProvider.GetInstance().Get("LoadModDialogFilterAllFIles")} (*.*)|*.*";
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    EditorManager.GetInstance().OpenEditor(dlg.FileName, EditorType.TextEditor);
+                }
+            }
+        }
+
 
         public void ResetZoom()
         {
@@ -440,5 +500,55 @@ namespace PZModdingStudio.Forms
             }
         }
 
+        public void Use()
+        {
+            this.Focus();
+            this.Activate();
+        }
+
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            undoToolStripMenuItem.Enabled = scintilla1.CanUndo;
+            redoToolStripMenuItem.Enabled = scintilla1.CanRedo;
+            cutToolStripMenuItem.Enabled = scintilla1.SelectedText.Length > 0;
+            copyToolStripMenuItem.Enabled = scintilla1.SelectedText.Length > 0;
+            pasteToolStripMenuItem.Enabled = Clipboard.ContainsText();
+            selectAllToolStripMenuItem.Enabled = scintilla1.TextLength > 0;
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (scintilla1.CanUndo) scintilla1.Undo();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (scintilla1.CanUndo) scintilla1.Redo();
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (scintilla1.SelectedText.Length > 0) scintilla1.Cut();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (scintilla1.SelectedText.Length > 0) scintilla1.Copy();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText()) scintilla1.Paste();
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            scintilla1.SelectAll();
+        }
+
+        private void searchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SearchSystem.GetInstance().OpenFindForActiveEditor();
+        }
     }
 }

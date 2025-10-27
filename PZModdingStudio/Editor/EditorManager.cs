@@ -4,21 +4,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PZModdingStudio.Editor
 {
     public class EditorManager
     {
 
-        FrmMainMenu frmMenu;
-        List<FrmCodeEditor> openEditors;
-        static EditorManager instance;
+        private FrmMainMenu frmMainMenu;
+        private List<IEditor> openEditors;
+        private static EditorManager instance;
+        private IEditor currentEditor;
 
-        public EditorManager(FrmMainMenu frmMenu)
+        public IReadOnlyList<IEditor> OpenEditors
         {
-            this.frmMenu = frmMenu;
-            openEditors = new List<FrmCodeEditor>();
+            get { return openEditors.AsReadOnly(); }
+        }
+
+        public EditorManager(FrmMainMenu frmMainMenu)
+        {
+            this.frmMainMenu = frmMainMenu;
+            openEditors = new List<IEditor>();
             instance = this;
+            currentEditor = null;
+            frmMainMenu.MainDockPanel.ActiveContentChanged += new System.EventHandler(this.dockPanel_ActiveContentChanged);
         }
 
         public static EditorManager GetInstance()
@@ -30,24 +39,24 @@ namespace PZModdingStudio.Editor
             return instance;
         }
 
-        public FrmCodeEditor OpenFileWithEditor(string filePath)
+        public IEditor OpenFileWithEditor(string filePath, EditorType type)
         {
-            FrmCodeEditor frmCodeEditor = FileOpened(filePath);
+            IEditor frmCodeEditor = FileOpened(filePath);
             if(frmCodeEditor != null)
             {
-                frmCodeEditor.Focus();
-                frmCodeEditor.Activate();
+                frmCodeEditor.Use();
             }
             else
             {
-                frmCodeEditor = OpenEditor(filePath);
+                frmCodeEditor = OpenEditor(filePath, type);
             }
             return frmCodeEditor;
         }
 
+
         public bool IsFileOpened(string filePath)
         {
-            foreach (FrmCodeEditor editor in openEditors)
+            foreach (IEditor editor in openEditors)
             {
                 if (editor.CurrentFile == filePath)
                 {
@@ -57,9 +66,9 @@ namespace PZModdingStudio.Editor
             return false;
         }
 
-        public FrmCodeEditor FileOpened(string filePath)
+        public IEditor FileOpened(string filePath)
         {
-            foreach(FrmCodeEditor editor in openEditors)
+            foreach(IEditor editor in openEditors)
             {
                 if(editor.CurrentFile == filePath)
                 {
@@ -69,25 +78,82 @@ namespace PZModdingStudio.Editor
             return null;
         }
 
-        public FrmCodeEditor OpenEditor(string filePath)
+        public IEditor OpenEditor(string filePath, EditorType type)
         {
-            FrmCodeEditor frmCodeEditor = CreateNewEditor();
+            IEditor frmCodeEditor = CreateNewEditor(type);
             frmCodeEditor.OpenFile(filePath);
             return frmCodeEditor;
         }
 
-        public FrmCodeEditor CreateNewEditor()
+        public IEditor CreateNewEditor()
+        {
+            return CreateNewEditor(EditorType.TextEditor);
+        }
+
+        public IEditor CreateNewEditor(EditorType type)
+        {
+            IEditor editor;
+            switch(type)
+            {
+                case EditorType.TextEditor:
+                    editor = CreateNewTextEditor();
+                    break;
+                default:
+                    editor = CreateNewTextEditor();
+                    break;
+            }
+
+            openEditors.Add(editor);
+            // Handle editor closing to remove from list
+            editor.FormClosed += frmCodeEditor_FormClosed;
+
+            return editor;
+        }
+
+        private IEditor CreateNewTextEditor()
         {
             FrmCodeEditor frmCodeEditor = new FrmCodeEditor();
-            frmCodeEditor.Show(frmMenu.MainDockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
-            openEditors.Add(frmCodeEditor);
-            // Handle editor closing to remove from list
-            frmCodeEditor.FormClosed += (s, e) =>
-            {
-                openEditors.Remove(frmCodeEditor);
-            };
+            frmCodeEditor.Show(frmMainMenu.MainDockPanel, WeifenLuo.WinFormsUI.Docking.DockState.Document);
             return frmCodeEditor;
         }
+
+        public void SaveFileWithEditor()
+        {
+            if(currentEditor != null)
+            {
+                currentEditor.SaveFile();
+            }
+        }
+
+        public void SaveFileAsWithEditor()
+        {
+            if (currentEditor != null)
+            {
+                currentEditor.SaveFileAs();
+            }
+        }
+
+        private void dockPanel_ActiveContentChanged(object sender, EventArgs e)
+        {
+            object ed = frmMainMenu.MainDockPanel.ActiveContent;
+            if (ed != null && ed is IEditor)
+            {
+                currentEditor = (IEditor)ed;
+                return;
+            }
+            if(openEditors.Count == 0)
+            {
+                currentEditor = null;
+            }
+        }
+
+        private void frmCodeEditor_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            IEditor editor = (IEditor)sender;
+            openEditors.Remove(editor);
+            editor.FormClosed -= frmCodeEditor_FormClosed;
+        }
+
 
     }
 }

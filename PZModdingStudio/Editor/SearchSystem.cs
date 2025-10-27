@@ -16,7 +16,7 @@ namespace PZModdingStudio.Editor
     internal class SearchSystem : ITranslatable
     {
 
-        private SearchSystem instance;
+        private static SearchSystem instance;
         private FrmFind findForm;
         private FrmCodeEditor currentEditor;
         private FrmMainMenu frmMainMenu;
@@ -38,7 +38,7 @@ namespace PZModdingStudio.Editor
             SetupTextInFindForm();
         }
 
-        public SearchSystem GetInstance()
+        public static SearchSystem GetInstance()
         {
             if (instance == null)
             {

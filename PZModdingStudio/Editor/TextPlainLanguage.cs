@@ -8,7 +8,7 @@ namespace PZModdingStudio.Editor
 
     public class TextPlainLanguage : ILanguageDefinition
     {
-        public string Name => "Texto plano";
+        public string Name => "PlainText";
 
         // Extensiones sin punto (para compatibilidad con la comprobación que uses)
         public IEnumerable<string> FileExtensions => new[] { ".txt" };

@@ -1,4 +1,5 @@
 ﻿using PZModdingStudio.Editor;
+using PZModdingStudio.Helpers;
 using ScintillaNET;
 using System;
 using System.Collections.Generic;
@@ -199,7 +200,7 @@ namespace PZModdingStudio.Forms
 
         private void editorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editorManager.CreateNewEditor();
+            editorManager.CreateNewEditor(EditorType.TextEditor);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -215,6 +216,45 @@ namespace PZModdingStudio.Forms
         private void searchInEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             searchSystem.OpenFindForActiveEditor();
+        }
+
+        private void loadFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FileManagement.OpenFile();
+        }
+
+        private void saveFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editorManager.SaveFileWithEditor();
+        }
+
+        private void saveFileAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editorManager.SaveFileAsWithEditor();
+        }
+
+        private void saveAllFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //if(editorManager.OpenEditors.Count > 0)
+            //{
+            //    bool changes = false;
+            //    foreach (var ed in editorManager.OpenEditors)
+            //    {
+            //        if (ed.scintillaInstance.Modified)
+            //        {
+            //            changes = true;
+            //            break;
+            //        }
+            //    }
+            //    if(changes)
+
+            //}
+            //Application.Exit();
         }
     }
 }

@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 // Asegúrate de tener referencia a Microsoft.VisualBasic
 using Microsoft.VisualBasic.FileIO;
+using PZModdingStudio;
+using PZModdingStudio.Editor;
 using PZModdingStudio.Forms;
 using PZModdingStudio.Helpers;
 
@@ -26,6 +28,7 @@ public class FileExplorerTree : UserControl
     public static string TextDelete { get; set; } = "Delete";
     public static string TextNew { get; set; } = "New";
     public static string TextOpen { get; set; } = "Open";
+    public static string TextOpenWith { get; set; } = "Open with";
     public static string TextOpenFileExplorer { get; set; } = "Open in File Explorer";
     public static string TextCantDeleteRoot { get; set; } = "Cannot remove root.";
     public static string TextCantRenameRoot { get; set; } = "Cannot rename root.";
@@ -275,7 +278,30 @@ public class FileExplorerTree : UserControl
             }
             else
             {
-                ctx.Items.Add(TextOpen, null, (s, ev) => OpenSelected());
+
+                if (FileManagement.IsSupportedFileExtension(path))
+                {
+                    IReadOnlyList<EditorType> supportedEditors = FileManagement.GetSupportedEditorsByExtension(path);
+                    if (supportedEditors.Count > 1)
+                    {
+                        var openWith = new ToolStripMenuItem(TextOpenWith);
+                        foreach (var editor in supportedEditors)
+                        {
+                            string editorDesc = FileManagement.GetEditorTypeDescription(editor);
+                            openWith.DropDownItems.Add(new ToolStripMenuItem(TranslationProvider.GetInstance().Get(editorDesc), null, (s, ev) => OpenSelectedWithEditor(editor)));
+                        }
+                        ctx.Items.Add(openWith);
+                    }
+                    else if (supportedEditors.Count == 1)
+                    {
+                        ctx.Items.Add(TextOpen, null, (s, ev) => OpenSelectedWithEditor(supportedEditors[0]));
+                    }
+                }
+                else
+                {
+                    ctx.Items.Add(TextOpen, null, (s, ev) => OpenSelected());
+                }
+
 
                 // Agregar Rename para archivos
                 ctx.Items.Add(TextRename, null, (s, ev) => RenamePath(path, e.Node));
@@ -307,13 +333,7 @@ public class FileExplorerTree : UserControl
     {
         if (e.Node.Tag is string path && File.Exists(path))
         {
-            Form form = this.FindForm();
-            if (form is FrmBase mainMenu && ((FrmBase)mainMenu).ParentMenuForm != null)
-            {
-                FileExtension.OpenFile(path);
-                return;
-            }
-            FileExtension.OpenFileWithDefaultProgram(path);
+            FileManagement.OpenFile(path);
         }
     }
 
@@ -321,15 +341,18 @@ public class FileExplorerTree : UserControl
     {
         if (tree.SelectedNode?.Tag is string path && File.Exists(path))
         {
-            Form form = this.FindForm();
-            if(form is FrmBase mainMenu && ((FrmBase)mainMenu).ParentMenuForm != null)
-            {
-                FileExtension.OpenFile(path);
-                return;
-            }
-            FileExtension.OpenFileWithDefaultProgram(path);
+            FileManagement.OpenFile(path);
         }
     }
+
+    private void OpenSelectedWithEditor(EditorType type)
+    {
+        if (tree.SelectedNode?.Tag is string path && File.Exists(path))
+        {
+            FileManagement.OpenFileWithEditor(path, type);
+        }
+    }
+
 
     private void ShowProperties()
     {

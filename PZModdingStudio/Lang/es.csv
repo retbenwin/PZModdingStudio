@@ -76,3 +76,34 @@ FrmFind.btnPrev.Text,Buscar anterior
 FrmFind.btnNext.Text,Buscar siguiente
 NotFound,No encontrado
 InvalidRegex1,Expresión regular inválida:
+PlainText,Texto plano
+Lua,LUA
+Format,Formato
+Col,Col
+Row,Línea
+Editor,Editor
+untitled,sin_título
+FrmCodeEditor.undoToolStripMenuItem.Text,Deshacer
+FrmCodeEditor.redoToolStripMenuItem.Text,Rehacer
+FrmCodeEditor.cutToolStripMenuItem.Text,Cortar
+FrmCodeEditor.copyToolStripMenuItem.Text,Copiar
+FrmCodeEditor.pasteToolStripMenuItem.Text,Pegar
+FrmCodeEditor.selectAllToolStripMenuItem.Text,Seleccionar todo
+FrmCodeEditor.searchToolStripMenuItem.Text,Buscar...
+FrmMainMenu.loadFileToolStripMenuItem.Text,Cargar Archivo
+FrmMainMenu.saveFileToolStripMenuItem.Text,Guardar
+FrmMainMenu.saveFileAsToolStripMenuItem.Text,Guardar Como
+FrmMainMenu.saveAllFilesToolStripMenuItem.Text,Guardar Todo
+OpenWithP1,Abrir con {param1}
+TextEditor,Editor de Texto
+ModInfoEditor,Editor de Mod Info
+ImageEditor,Editor de Imagen
+ImageViewer,Visor de Imágenes
+AudioEditor,Editor de Audio
+AudioPlayer,Reproductor de Audio
+VideoEditor,Editor de Video
+VideoPlayer,Reproductor de Video
+Models3DEditor,Editor de Modelos 3D
+Model3DViewer,Visor de Modelos 3D
+UnsupportedFileType,Este tipo de archivo no es compatible para editar o ver.
+OpenWith,Abrir con

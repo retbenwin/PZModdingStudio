@@ -25,6 +25,7 @@ namespace PZModdingStudio
             FileExplorerTree.TextDelete = provider.Get("Delete");
             FileExplorerTree.TextNew = provider.Get("New");
             FileExplorerTree.TextOpen = provider.Get("Open");
+            FileExplorerTree.TextOpenWith = provider.Get("OpenWith");
             FileExplorerTree.TextOpenFileExplorer = provider.Get("OpenFileExplorer");
             FileExplorerTree.TextCantDeleteRoot = provider.Get("CantDeleteRoot");
             FileExplorerTree.TextWarning = provider.Get("Warning");
