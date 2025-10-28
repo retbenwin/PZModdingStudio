@@ -1,4 +1,5 @@
-﻿using PZModdingStudio.Editor;
+﻿using Microsoft.VisualBasic;
+using PZModdingStudio.Editor;
 using PZModdingStudio.Helpers;
 using ScintillaNET;
 using System;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PZModdingStudio.Forms
 {
@@ -22,6 +24,7 @@ namespace PZModdingStudio.Forms
         private FrmSolutionExplorer navigationMenu = null;
         private SearchSystem searchSystem = null;
         private EditorManager editorManager = null;
+        private CommandsManager commandsManager = null;
 
         public DockPanel MainDockPanel
         {
@@ -173,17 +176,16 @@ namespace PZModdingStudio.Forms
 
         private void FrmMainMenu_Load(object sender, EventArgs e)
         {
-            Task.Run(() =>
+            this.BeginInvoke(new Action(() =>
             {
-                this.Invoke(new Action(() =>
-                {
-                    PopulateComboMods();
-                    FillNavigationMenu();
-                }));
-            });
-            searchSystem = new SearchSystem(this);
-            editorManager = new EditorManager(this);
-            TraslationStatic.ConfigureStaticTranslations(this.translator);
+                PopulateComboMods();
+                FillNavigationMenu();
+                searchSystem = new SearchSystem(this);
+                editorManager = new EditorManager(this);
+                commandsManager = new CommandsManager(this);
+                commandsManager.OnCommandPressed += CommandPressedHandler;
+                TraslationStatic.ConfigureStaticTranslations(this.translator);
+            }));
         }
 
         private void resetZoomToolStripMenuItem_Click(object sender, EventArgs e)
@@ -198,19 +200,24 @@ namespace PZModdingStudio.Forms
             }
         }
 
-        private void editorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CommandPressedHandler(object sender, CommandsManager.CommandPressedArgs e)
         {
-            editorManager.CreateNewEditor(EditorType.TextEditor);
-        }
-
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (keyData == (Keys.Control | Keys.F))
+            // Postea la acción al loop de mensajes del UI para que se ejecute después
+            this.BeginInvoke(new Action(() =>
             {
-                searchSystem.OpenFindForActiveEditor();
-                return true;
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
+                switch (e.commandType)
+                {
+                    case CommandsManager.CommandType.Save:
+                        editorManager.SaveFileWithEditor();
+                        break;
+                    case CommandsManager.CommandType.SaveAll:
+                        editorManager.SaveAllFiles();
+                        break;
+                    case CommandsManager.CommandType.Find:
+                        searchSystem.OpenFindForActiveEditor();
+                        break;
+                }
+            }));
         }
 
         private void searchInEditorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -235,26 +242,48 @@ namespace PZModdingStudio.Forms
 
         private void saveAllFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            editorManager.SaveAllFiles();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //if(editorManager.OpenEditors.Count > 0)
-            //{
-            //    bool changes = false;
-            //    foreach (var ed in editorManager.OpenEditors)
-            //    {
-            //        if (ed.scintillaInstance.Modified)
-            //        {
-            //            changes = true;
-            //            break;
-            //        }
-            //    }
-            //    if(changes)
-
-            //}
-            //Application.Exit();
+            this.Close();
         }
+
+        private void newTextEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            editorManager.CreateNewEditor(EditorType.TextEditor);
+        }
+
+        private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            saveAllFilesToolStripMenuItem.Enabled = editorManager.HasChanges();
+            saveFileAsToolStripMenuItem.Enabled = editorManager.CurrentEditor?.HasChanges() ?? false;
+            saveFileToolStripMenuItem.Enabled = editorManager.CurrentEditor?.HasChanges() ?? false;
+        }
+
+        private void FrmMainMenu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (editorManager.HasChanges())
+            {
+                var result = MessageBox.Show(translator.Get("UnsavedChangesExit") + Environment.NewLine + translator.Get("AreYouSureExitLoseChanges"), translator.Get("UnsavedChangesExitTitle"), MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                if (result != DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                }
+                return;
+            }
+            if(modsManager.Mods.Count > 0)
+            {
+                var result = MessageBox.Show((modsManager.Mods.Count > 1 ? translator.Get("ModsLoadedExit") : translator.Get("ModLoadedExit")) + Environment.NewLine + translator.Get("AreYouSureExit"), translator.Get("ModLoadedExitTitle"), MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                if (result != DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                }
+                return;
+            }
+
+        }
+
     }
 }

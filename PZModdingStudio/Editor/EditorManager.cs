@@ -21,6 +21,11 @@ namespace PZModdingStudio.Editor
             get { return openEditors.AsReadOnly(); }
         }
 
+        public IEditor CurrentEditor
+        {
+            get { return currentEditor; }
+        }
+
         public EditorManager(FrmMainMenu frmMainMenu)
         {
             this.frmMainMenu = frmMainMenu;
@@ -106,7 +111,7 @@ namespace PZModdingStudio.Editor
             openEditors.Add(editor);
             // Handle editor closing to remove from list
             editor.FormClosed += frmCodeEditor_FormClosed;
-
+            editor.UpdatedTitle += frmEditor_UpdatedTitle;
             return editor;
         }
 
@@ -119,7 +124,7 @@ namespace PZModdingStudio.Editor
 
         public void SaveFileWithEditor()
         {
-            if(currentEditor != null)
+            if(currentEditor != null && currentEditor.HasChanges())
             {
                 currentEditor.SaveFile();
             }
@@ -127,10 +132,37 @@ namespace PZModdingStudio.Editor
 
         public void SaveFileAsWithEditor()
         {
-            if (currentEditor != null)
+            if (currentEditor != null && currentEditor.HasChanges())
             {
                 currentEditor.SaveFileAs();
             }
+        }
+
+        public bool SaveAllFiles()
+        {
+            foreach(IEditor editor in openEditors)
+            {
+                if (editor.HasChanges())
+                {
+                    if (!editor.SaveFile())
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool HasChanges()
+        {
+            foreach(IEditor editor in openEditors)
+            {
+                if(editor.HasChanges())
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void dockPanel_ActiveContentChanged(object sender, EventArgs e)
@@ -152,6 +184,11 @@ namespace PZModdingStudio.Editor
             IEditor editor = (IEditor)sender;
             openEditors.Remove(editor);
             editor.FormClosed -= frmCodeEditor_FormClosed;
+        }
+
+        private void frmEditor_UpdatedTitle(object sender, EventArgs e)
+        {
+            SearchSystem.GetInstance().SetupTextInFindForm();
         }
 
 

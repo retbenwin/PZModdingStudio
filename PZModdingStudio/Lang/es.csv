@@ -92,7 +92,7 @@ FrmCodeEditor.selectAllToolStripMenuItem.Text,Seleccionar todo
 FrmCodeEditor.searchToolStripMenuItem.Text,Buscar...
 FrmMainMenu.loadFileToolStripMenuItem.Text,Cargar Archivo
 FrmMainMenu.saveFileToolStripMenuItem.Text,Guardar
-FrmMainMenu.saveFileAsToolStripMenuItem.Text,Guardar Como
+FrmMainMenu.saveFileAsToolStripMenuItem.Text,Guardar Como...
 FrmMainMenu.saveAllFilesToolStripMenuItem.Text,Guardar Todo
 OpenWithP1,Abrir con {param1}
 TextEditor,Editor de Texto
@@ -107,3 +107,12 @@ Models3DEditor,Editor de Modelos 3D
 Model3DViewer,Visor de Modelos 3D
 UnsupportedFileType,Este tipo de archivo no es compatible para editar o ver.
 OpenWith,Abrir con
+FrmMainMenu.newTextEditorToolStripMenuItem.Text,Nuevo Editor de Texto
+UnsavedChangesExit,Hay cambios sin guardar en algunas ventanas.
+AreYouSureExit,¿Estás seguro de que quieres salir?
+AreYouSureExitLoseChanges,¿Estás seguro de que quieres salir y perder esos cambios?
+UnsavedChangesExitTitle,Cambios sin guardar
+ModLoadedExit,Hay un mod cargado actualmente.
+ModsLoadedExit,Hay mods cargados actualmente.
+ModLoadedExitTitle,Mod cargado
+FrmMainMenu.exitToolStripMenuItem.Text,Salir

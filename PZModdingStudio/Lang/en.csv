@@ -92,7 +92,7 @@ FrmCodeEditor.selectAllToolStripMenuItem.Text,Select All
 FrmCodeEditor.searchToolStripMenuItem.Text,Search...
 FrmMainMenu.loadFileToolStripMenuItem.Text,Load File
 FrmMainMenu.saveFileToolStripMenuItem.Text,Save File
-FrmMainMenu.saveFileAsToolStripMenuItem.Text,Save File AS
+FrmMainMenu.saveFileAsToolStripMenuItem.Text,Save File AS...
 FrmMainMenu.saveAllFilesToolStripMenuItem.Text,Save All Files
 OpenWithP1,Open with {param1}
 TextEditor,Text Editor
@@ -107,3 +107,12 @@ Models3DEditor,3D Models Editor
 Model3DViewer,3D Models Viewer
 UnsupportedFileType,This file type is not supported for editing or viewing.
 OpenWith,Open with
+FrmMainMenu.newTextEditorToolStripMenuItem.Text,New Text Editor
+UnsavedChangesExit,There are unsaved changes in some windows.
+AreYouSureExit,Are you sure you want to exit?
+AreYouSureExitLoseChanges,Are you sure you want to exit and lose those changes?
+UnsavedChangesExitTitle,Unsaved Changes
+ModLoadedExit,There is a mod currently loaded.
+ModsLoadedExit,There are mods currently loaded.
+ModLoadedExitTitle,Mod Loaded
+FrmMainMenu.exitToolStripMenuItem.Text,Exit

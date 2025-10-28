@@ -50,15 +50,19 @@ namespace PZModdingStudio.Editor
 
         string CurrentFile { get; }
 
-        void SaveFile();
+        bool SaveFile();
 
-        void SaveFileAs();
+        bool SaveFileAs();
 
         void OpenFile(string filePath);
 
         void Use();
 
+        bool HasChanges();
+
         event FormClosedEventHandler FormClosed;
+
+        event EventHandler UpdatedTitle;
 
     }
 }

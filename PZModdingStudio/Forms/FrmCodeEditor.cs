@@ -21,6 +21,8 @@ namespace PZModdingStudio.Forms
         private readonly Dictionary<string, ILanguageDefinition> registeredLanguages =
             new Dictionary<string, ILanguageDefinition>(StringComparer.OrdinalIgnoreCase);
 
+        public event EventHandler UpdatedTitle;
+
         public  Scintilla scintillaInstance { get { return scintilla1; } }
         public string CurrentFile { get { return currentFile; } }
         public EditorType Type { get { return EditorType.TextEditor; } }
@@ -97,6 +99,7 @@ namespace PZModdingStudio.Forms
 
         public void UpdateTitle()
         {
+            string actualText = this.Text;
             string title = "";
             if(this.CurrentFile != null)
             {
@@ -118,6 +121,10 @@ namespace PZModdingStudio.Forms
                 title = "* " + title;
             }
             this.Text = title;
+            if (actualText != this.Text)
+            {
+                UpdatedTitle?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         public void UpdateStatusLabel()
@@ -443,19 +450,20 @@ namespace PZModdingStudio.Forms
             SetLanguage(registeredLanguages["PlainText"].Name); // por defecto
         }
 
-        public void SaveFile()
+        public bool SaveFile()
         {
             if (string.IsNullOrEmpty(currentFile))
-                SaveFileAs();
+                return SaveFileAs();
             else
             {
                 File.WriteAllText(currentFile, scintilla1.Text ?? "", Encoding.UTF8);
                 scintilla1.SetSavePoint();
                 UpdateTitle();
             }
+            return true;
         }
 
-        public void SaveFileAs()
+        public bool SaveFileAs()
         {
             using (var dlg = new SaveFileDialog())
             {
@@ -471,8 +479,10 @@ namespace PZModdingStudio.Forms
                         ?? registeredLanguages["PlainText"];
                     SetLanguage(lang.Name);
                     scintilla1.SetSavePoint();
+                    return true;
                 }
             }
+            return false;
         }
 
         public static void OpenFile()
@@ -550,5 +560,12 @@ namespace PZModdingStudio.Forms
         {
             SearchSystem.GetInstance().OpenFindForActiveEditor();
         }
+
+        public bool HasChanges()
+        {
+            return scintilla1.Modified;
+        }
+
+
     }
 }

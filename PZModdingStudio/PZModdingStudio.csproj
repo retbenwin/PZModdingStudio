@@ -118,6 +118,7 @@
     <Compile Include="Helpers\DeleteHelpers.cs" />
     <Compile Include="Helpers\FileManagement.cs" />
     <Compile Include="Helpers\FilePropertiesHelper.cs" />
+    <Compile Include="Helpers\CommandsManager.cs" />
     <Compile Include="Helpers\PathHelpers.cs" />
     <Compile Include="Lang\ITranslatable.cs" />
     <Compile Include="Lang\LanguageItem.cs" />
